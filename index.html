@@ -110,6 +110,18 @@
                     <button class="btn-print" onclick="printMonthly()">🖨️ 月次レポート印刷 (A4)</button>
                 </div>
             </div>
+
+            <div class="dashboard-bar">
+                <div class="dash-stats">
+                    <div class="dash-item">総発注: <strong id="dash-total">0</strong></div>
+                    <div class="dash-item text-danger">未納品: <strong id="dash-pending">0</strong></div>
+                    <div class="dash-item text-success">納品済: <strong id="dash-completed">0</strong></div>
+                </div>
+                <div class="search-group">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" placeholder="品名、メーカー、担当者で検索..." onkeyup="filterData()">
+                </div>
+            </div>
             
             <div class="table-container">
                 <table id="historyTable">
@@ -154,7 +166,7 @@
                     </tr>
                 </thead>
                 <tbody id="print-table-body">
-                    </tbody>
+                </tbody>
             </table>
             <div class="print-footer">
                 <p class="notes">※本レポートはシステムより自動生成されました。</p>
