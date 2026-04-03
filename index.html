@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>物品購入管理システム</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="navbar hide-on-print">
+        <div class="logo">📦 物品管理</div>
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('form')">物品購入依頼書</button>
+            <button class="tab-btn" onclick="switchTab('history')">発注履歴</button>
+        </div>
+    </div>
+
+    <div id="tab-form" class="tab-content active hide-on-print">
+        <div class="card">
+            <h2>物品購入依頼書 (Input Form)</h2>
+            <form id="purchaseForm" onsubmit="submitData(event)">
+                <div class="form-group">
+                    <label>購入依頼日 (Tanggal):</label>
+                    <input type="date" id="reqDate" required>
+                </div>
+                <div class="form-group">
+                    <label>メーカー (Maker):</label>
+                    <input type="text" id="maker" required>
+                </div>
+                <div class="form-group">
+                    <label>型式 (Model/Tipe):</label>
+                    <input type="text" id="model">
+                </div>
+                <div class="form-group">
+                    <label>購入先 (Vendor/Toko):</label>
+                    <input type="text" id="vendor">
+                </div>
+                <div class="form-group">
+                    <label>発注コード (Kode Order):</label>
+                    <input type="text" id="code">
+                </div>
+                <div class="form-group">
+                    <label>品名 (Nama Barang):</label>
+                    <input type="text" id="itemName" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label>数量 (Jumlah):</label>
+                        <input type="number" id="qty" min="1" required>
+                    </div>
+                    <div class="form-group half">
+                        <label>単位 (Satuan):</label>
+                        <select id="unit" required>
+                            <option value="個">個 (Pcs)</option>
+                            <option value="枚">枚 (Lembar)</option>
+                            <option value="本">本 (Batang/Botol)</option>
+                            <option value="缶">缶 (Kaleng)</option>
+                            <option value="箱">箱 (Box)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>担当者 (PIC):</label>
+                    <input type="text" id="pic" required>
+                </div>
+                <button type="submit" id="btnSubmit" class="btn-primary">送信 (Kirim)</button>
+                <div id="formStatus"></div>
+            </form>
+        </div>
+    </div>
+
+    <div id="tab-history" class="tab-content hide-on-print">
+        <div class="card card-large">
+            <div class="history-header">
+                <h2>発注履歴 (Riwayat Pesanan)</h2>
+                <div>
+                    <button class="btn-secondary" onclick="loadData()">🔄 更新 (Refresh)</button>
+                    <button class="btn-print" onclick="printMonthly()">🖨️ 月次レポート印刷 (Print Bulan Ini)</button>
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <table id="historyTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>日付</th>
+                            <th>メーカー</th>
+                            <th>型式</th>
+                            <th>品名</th>
+                            <th>数量</th>
+                            <th>担当者</th>
+                            <th>ステータス</th>
+                            <th>アクション</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <tr><td colspan="9" style="text-align: center;">データを読み込んでいます... (Loading)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="print-area">
+        <div class="print-header">
+            <h1>物品購入レポート</h1>
+            <p id="print-subtitle">Date: <span id="print-date"></span></p>
+        </div>
+        <table class="print-table">
+            <thead>
+                <tr>
+                    <th>日付</th>
+                    <th>メーカー</th>
+                    <th>型式</th>
+                    <th>品名</th>
+                    <th>数量</th>
+                    <th>担当者</th>
+                    <th>ステータス</th>
+                </tr>
+            </thead>
+            <tbody id="print-table-body">
+                </tbody>
+        </table>
+        <div class="print-signature">
+            <div class="sig-box">
+                <p>承認者 (Manager)</p>
+                <div class="line"></div>
+            </div>
+            <div class="sig-box">
+                <p>担当者 (PIC)</p>
+                <div class="line"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
